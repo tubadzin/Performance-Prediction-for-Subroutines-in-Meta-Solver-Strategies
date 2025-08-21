@@ -1,0 +1,10 @@
+func options_rf = get_rf_default_options
+options_rf.modelType = 'rf';
+options_rf.nSub = 10;
+options_rf.logModel = 1;
+options_rf.pca = 0; % do no PCA here, for feature importance
+options_rf.init_split_ratio = 5.0/6; % options.tuning_params(3);
+options_rf.init_Splitmin = 10; % options.tuning_params(2);
+options_rf.orig_rf = 0;
+options_rf.strategyForMissing = 0;
+options_rf.doQuadratic = 0;

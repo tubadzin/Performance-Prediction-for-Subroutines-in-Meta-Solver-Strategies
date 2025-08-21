@@ -1,0 +1,14 @@
+hard:
+/ubc/cs/project/arrow/projects/MIP_data/coral_2009_12/ramos3.mps
+
+optimal/not
+/ubc/cs/project/arrow/projects/MIP_data/coral_2009_12/Test3.mps
+
+normal:
+/ubc/cs/project/arrow/projects/MIP_data/coral_2009_12/sp98ic.mps
+
+easy:
+/ubc/cs/project/arrow/projects/MIP_data/CATS-d_regions-goods100-bids500/CATS-d_regions-goods100-bids500_0956.lp
+
+
+

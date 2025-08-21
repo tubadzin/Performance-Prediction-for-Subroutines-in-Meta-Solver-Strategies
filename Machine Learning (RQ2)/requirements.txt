@@ -1,0 +1,13 @@
+pandas~=2.2.3
+numpy~=2.2.5
+scikit-learn~=1.7.0
+xgboost
+pip
+lifelines~=0.30.0
+optuna~=4.4.0
+joblib~=1.5.1
+tqdm~=4.67.1
+matplotlib~=3.10.0
+plotly~=6.2.0
+scipy~=1.15.3
+shap

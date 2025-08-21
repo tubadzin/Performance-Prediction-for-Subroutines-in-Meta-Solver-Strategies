@@ -1,0 +1,203 @@
+function redo_scatter_plots
+
+prefix = 'results/ehm/data_';
+out_prefix = 'results/redone/data_';
+infix = '_csv/'; %was: '_csv_'
+postfix = '-pred.fig';
+
+benchs = {};
+benchs{end+1} = 'SAT_INDU-HAND-RAND-minisat';
+benchs{end+1} = 'SAT_SAT_Competition_RACE_HAND-minisat';
+benchs{end+1} = 'SAT_SAT_Competition_RACE_RAND-minisat';
+
+benchs{end+1} = 'SAT_SAT_Competition_RACE_INDU-minisat';
+benchs{end+1} = 'SAT_IBM-SWV-minisat';
+benchs{end+1} = 'SAT_IBM-ALL-minisat';
+benchs{end+1} = 'SAT_SWV-minisat';
+
+benchs{end+1} = 'SAT_SAT_Competition_RACE_INDU-cryptominisat';
+benchs{end+1} = 'SAT_IBM-SWV-cryptominisat';
+benchs{end+1} = 'SAT_IBM-ALL-cryptominisat';
+benchs{end+1} = 'SAT_SWV-cryptominisat';
+
+benchs{end+1} = 'SAT_SAT_Competition_RACE_INDU-spear';
+benchs{end+1} = 'SAT_IBM-SWV-spear';
+benchs{end+1} = 'SAT_IBM-ALL-spear';
+benchs{end+1} = 'SAT_SWV-spear';
+
+benchs{end+1} = 'SAT_SAT_Competition_RACE_RAND_SAT-tnm';
+benchs{end+1} = 'SAT_SAT_Competition_RACE_RAND_SAT-saps';
+
+benchs{end+1} = 'MIP_BIGMIX-cplex';
+benchs{end+1} = 'MIP_BIGMIX-gurobi';
+benchs{end+1} = 'MIP_BIGMIX-scip';
+benchs{end+1} = 'MIP_BIGMIX-lpsolve';
+
+benchs{end+1} = 'MIP_CORLAT-cplex';
+benchs{end+1} = 'MIP_CORLAT-gurobi';
+benchs{end+1} = 'MIP_CORLAT-scip';
+benchs{end+1} = 'MIP_CORLAT-lpsolve';
+
+% benchs{end+1} = 'MIP_RCW-cplex';
+benchs{end+1} = 'MIP_REG-cplex';
+benchs{end+1} = 'MIP_CORLAT-REG-cplex';
+benchs{end+1} = 'MIP_CORLAT-REG-RCW-cplex';
+
+benchs{end+1} = 'TSP_PORTGEN-lkh202';
+benchs{end+1} = 'TSP_PORTCGEN-lkh202';
+% % benchs{end+1} = 'TSP_PORTGEN-PORTCGEN-lkh202';
+benchs{end+1} = 'TSP_TSPLIB_LKH_default_both_ok';
+
+benchs{end+1} = 'TSP_PORTGEN-concorde';
+benchs{end+1} = 'TSP_PORTCGEN-concorde';
+% % benchs{end+1} = 'TSP_PORTGEN-PORTCGEN-concorde';
+benchs{end+1} = 'TSP_TSPLIB_concorde_default_both_ok';
+
+
+% % % options_vec = {get_spore_options,get_spore_options_rmse_copy,get_lr_default_options_copy,get_lr_jacm_options};
+options_vec = {get_lr_cv_options,get_spore_cv_options_rmse,get_nn_cv_options,get_gp_default_options,get_regtree_default_options,get_rf_cv_options,get_rf_default_options};
+
+% options_vec = {get_spore_options, get_spore_options_rmse, get_lr_default_options, get_lr_jacm_options,get_regtree_default_options,get_gp_default_options,get_nn_options, get_rf_default_options}
+options_vec = {get_lr_jacm_options,get_lr_cv_options,get_spore_cv_options_rmse,get_nn_cv_options,get_gp_default_options,get_regtree_default_options,get_rf_default_options,get_rf_cv_options}%,get_rf_default_options}
+%options_vec = {get_lr_cv_options,get_spore_cv_options_rmse,get_nn_cv_options,get_gp_default_options,get_regtree_default_options,get_rf_default_options,get_rf_cv_options}%,get_rf_default_options}
+options_vec = {get_rf_default_options}
+options_vec = {get_lr_default_options,get_lr_jacm_options,get_spore_options_rmse,get_nn_options,get_gp_default_options,get_regtree_default_options,get_rf_default_options};
+
+% options_vec = {get_lr_default_options,get_spore_options_rmse,get_nn_options,get_gp_default_options,get_regtree_default_options,get_rf_default_options};
+
+% options_vec = {get_lr_default_options};
+methods = {};
+for i=1:length(options_vec)
+    methods{end+1} = options_vec{i}.unique_model_name;
+end
+
+axmin = 0.0049; %2 for RCW, 0.2 for some TSP;
+% axmin = 2;
+axmax = 3601;
+do_the_job(prefix, out_prefix, infix, postfix, benchs, methods, axmin, axmax);
+
+
+prefix = 'results/ehm/params-';
+out_prefix = 'results/redone/params-';
+% mkdir('results/redone')
+
+infix = '/';
+
+tuningScenarios = {};
+tuningScenarios{end+1} = 'CPLEX12-cat-BIGMIX';
+% tuningScenarios{end+1} = 'CPLEX12-cat-CORLAT';
+% tuningScenarios{end+1} = 'CPLEX12-cat-REG';
+% tuningScenarios{end+1} = 'CPLEX12-cat-RCW';
+% tuningScenarios{end+1} = 'CPLEX12-cat-CORLAT-REG';
+% tuningScenarios{end+1} = 'CPLEX12-cat-CORLAT-REG-RCW';
+% tuningScenarios{end+1} = 'SPEAR-ibm-al';
+% tuningScenarios{end+1} = 'SPEAR-swv-al';
+% tuningScenarios{end+1} = 'SPEAR-ibm-swv-al';
+% tuningScenarios{end+1} = 'LKH-TSPLIB';
+
+
+benchs = tuningScenarios;
+axmin = 0.005; %0.049;0.8;%
+axmax = 300.1;
+% do_the_job(prefix, out_prefix, infix, postfix, benchs, methods, axmin, axmax);
+
+prefix = 'results/matrix/single_preds/';
+out_prefix = 'results/redone/matrix-';
+infix = '-10000-single_preds-testC_testI-';
+% do_the_job(prefix, out_prefix, infix, postfix, benchs, methods, axmin, axmax);
+
+methods = {'RF-def-dropcensdata', 'RF-def-fill_in_mean', 'RF-def-fill_in_samples', 'RF-def-ignorecensinfo'};
+prefix = 'results/matrix/single_preds/capslack_thresh/';
+infix = '-single_preds-testC_testI-';
+out_prefix = 'results/redone/censoring-capslack1_';
+
+% do_the_job(prefix, out_prefix, infix, postfix, benchs, methods);
+
+prefix = 'results/matrix/single_preds/fixed_thresh/';
+out_prefix = 'results/redone/censoring-thresh1_';
+% do_the_job(prefix, out_prefix, infix, postfix, benchs, methods, 0.0049, 300.1);
+% do_the_job(prefix, out_prefix, infix, postfix, benchs, methods, 0.003, 400.1);
+
+
+
+function do_the_job(prefix, out_prefix, infix, postfix, benchs, methods, axmin, axmax)
+for b=1:length(benchs)
+    mini = inf;
+    maxi = -inf;
+    y = [];
+
+    for i=1:length(methods)
+        figure_file = strcat(prefix, benchs{b}, infix, methods{i}, postfix);
+        fighandle=openfig(figure_file);
+        ax=findall(fighandle,'Type','line');
+        x=get(ax,'Xdata');
+        all_x = [];
+        for j=[1,length(x)];%1:length(x)
+            all_x = [all_x, x{j}];
+        end
+        x=all_x;
+        y=get(ax,'YData');
+        all_y = [];
+        for j=[1,length(y)];%:length(y)
+            all_y = [all_y, y{j}];
+        end
+        y=all_y;
+        mini = min(mini, min(x));
+        mini = min(mini, min(y));
+        maxi = max(maxi, max(x));
+        maxi = max(maxi, max(y));
+    end
+    close all;
+
+%     slack = 1.5;
+%     maxi = maxi * slack;
+%     mini = mini / slack;
+
+%     if maxi > axmax
+%         maxi = axmax;
+%         y(find(y>maxi))
+%     end
+%     if mini < axmin
+%         mini = axmin;
+%         y(find(y<mini))
+%     end
+
+    for i=1:length(methods)
+        figure_file = strcat(prefix, benchs{b}, infix, methods{i}, postfix);
+        fighandle=openfig(figure_file);
+        ax=findall(fighandle,'Type','line');
+        x=get(ax,'Xdata');
+        all_x = [];
+        for j=[1,length(x)];%1:length(x)
+            all_x = [all_x, x{j}];
+        end
+        x=all_x;
+        if nargin >= 7
+            x(find(x>axmax))=axmax;
+        end
+        y=get(ax,'YData');
+        all_y = [];
+        for j=[1,length(y)];%1:length(y)
+            all_y = [all_y, y{j}];
+        end
+        y=all_y;
+        length(y)
+        
+        perm = randperm(length(y));
+        perm = perm(1:min(length(y),1000));
+        x=x(perm);
+        y=y(perm);
+
+        figure_prefix = strcat(out_prefix, benchs{b}, '_csv_', methods{i});
+        logModel = 1;
+        title_prefix = '';
+        [rmse, ll, cc, cc_rank] = measures_of_fit(log10(x), log10(y), zeros(length(x),1))
+        if nargin < 7
+            plot_simple_pred_scatter(x, log10(y), zeros(length(x),1), zeros(length(x),1), 0,0,0, figure_prefix, title_prefix, logModel)
+        else
+%             plot_simple_pred_scatter(x, log10(y), zeros(length(x),1), zeros(length(x),1), 0,0,0, figure_prefix, title_prefix, logModel, mini, maxi, 30)
+            plot_simple_pred_scatter(x, log10(y), zeros(length(x),1), zeros(length(x),1), 0,0,0, figure_prefix, title_prefix, logModel, axmin, axmax, 30)        
+        end
+    end
+    close all;
+end

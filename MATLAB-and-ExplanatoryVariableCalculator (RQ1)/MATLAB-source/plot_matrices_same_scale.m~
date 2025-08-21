@@ -1,0 +1,114 @@
+function plot_matrices_same_scale
+
+names = {};
+names{end+1} = 'CPLEX12-cat-BIGMIX';
+% names{end+1} = 'CPLEX12-cat-CORLAT';
+% names{end+1} = 'CPLEX12-cat-REG';
+% names{end+1} = 'CPLEX12-cat-CORLAT-REG';
+% names{end+1} = 'CPLEX12-cat-RCW';
+% names{end+1} = 'CPLEX12-cat-CORLAT-REG-RCW';
+% names{end+1} = 'SPEAR-ibm-al';
+% names{end+1} = 'SPEAR-swv-al';
+% names{end+1} = 'SPEAR-ibm-swv-al';
+% names{end+1} = 'LKH-TSPLIB';
+
+
+elements = {'trainC_trainI', 'trainC_testI', 'testC_trainI', 'testC_testI'};
+
+
+for j=1:length(names)
+    name = names{j};
+    min_val = inf;
+    max_val = -inf;
+    for i=1:length(elements)
+        el = elements{i};
+
+        fighandles = get_handles(name,el);
+        for figno = 1:length(fighandles)
+            a = getimage(fighandles{figno}{2});
+            max_val = max(max(max(a)), max_val);
+            min_val = min(min(min(a)), min_val);
+        end
+    end
+    
+    for i=1:length(elements)
+        el = elements{i};
+        fighandles = get_handles(name,el);
+        
+        for figno = 2:length(fighandles)
+            matrix = getimage(fighandles{figno}{2});
+            filename_prefix = strcat(['results/matrix/2d/redone/', name, '-', fighandles{figno}{1}, el]);
+            plot_figure(filename_prefix, matrix, min_val, max_val);
+        end
+        
+        matrix = getimage(fighandles{1}{2});
+        mkdir('/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/redone/');
+        filename_prefix = ['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/redone/',name,'-truematrix-', el];
+        plot_figure(filename_prefix, matrix, min_val, max_val);
+    end
+	close all;
+end
+
+function fighandles = get_handles(name, el)
+fighandles = {};
+fighandles{end+1} = {'true', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-truematrix-', el, '.fig'])};
+% fighandles{end+1} = {'LR10000',openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-LR.fig'])};
+% fighandles{end+1} = {'GPML10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-GPML.fig'])};
+% fighandles{end+1} = {'RT-10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-regression-tree.fig'])};
+% fighandles{end+1} = {'RF-10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-rf.fig'])};
+
+fighandles{end+1} = {'RF-def-10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RF-def.fig'])};
+fighandles{end+1} = {'RT-10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RT.fig'])};
+fighandles{end+1} = {'GP-10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-GP.fig'])};
+fighandles{end+1} = {'NN-10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-NN.fig'])};
+fighandles{end+1} = {'Foba-rmse-10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-Foba-rmse.fig'])};
+
+
+% fighandles{end+1} = {'true', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-truematrix-', el, '.fig'])};
+% fighandles{end+1} = {'Foba-cv-rmse10000',openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-Foba-cv-rmse.fig'])};
+% fighandles{end+1} = {'RR-cv10000',openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RR-cv.fig'])};
+% fighandles{end+1} = {'GP10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-GP.fig'])};
+% fighandles{end+1} = {'NN-cv10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-NN-cv.fig'])};
+% fighandles{end+1} = {'RT10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RT.fig'])};
+% fighandles{end+1} = {'RF-def10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RF-def.fig'])};
+% fighandles{end+1} = {'RF-cv10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RF-cv.fig'])};
+% 
+% fighandles{end+1} = {'RF-def10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RF-def.fig'])};
+
+% % fighandles{end+1} = {'regression-tree', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-predmatrix-', el, '-NN-cv.fig'])};
+fighandles{end+1} = {'true', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-5000000-truematrix-', el, '.fig'])};
+fighandles{end+1} = {'RF-def10000', openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-10000-predmatrix-', el, '-RF-def.fig'])};
+fighandles{end+1} = {'RF-def5000000-',openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-5000000-predmatrix-', el, '-RF-def.fig'])};
+fighandles{end+1} = {'RF-def100-',openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-100-predmatrix-', el, '-RF-def.fig'])};
+fighandles{end+1} = {'RF-def1000-',openfig(['/ubc/cs/project/arrow/hutter/EHM-Code/results/matrix/2d/',name,'-1000-predmatrix-', el, '-RF-def.fig'])};
+
+
+function plot_figure(filename_prefix, matrix, min_val, max_val) 
+matrix(1,1) = min_val;
+matrix(end,end) = max_val;
+h=image(matrix, 'CDataMapping', 'scaled');
+h
+%             colormap(hot);
+colorbar;
+
+dist_from_end = 50;
+if size(matrix,2) < 300
+    dist_from_end = ceil(size(matrix,2)/10);
+end
+
+set(gca, 'XTick', [dist_from_end,size(matrix,2)-dist_from_end], 'XTickLabel', {'easy','hard'})
+set(gca, 'YTick', [dist_from_end,size(matrix,1)-dist_from_end], 'YTickLabel', {'good','bad'})
+ylabel('configurations', 'FontSize', 22); 
+xlabel('instances', 'FontSize', 22);
+
+set(gca, 'FontSize', 16);
+
+saveas(gcf, strcat(filename_prefix,'.fig'));
+set(gcf, 'PaperPositionMode', 'auto');
+
+pdf_filename = strcat(filename_prefix,'.pdf');
+if exist(pdf_filename, 'file');
+    delete(pdf_filename);
+end
+export_fig(pdf_filename);
+fprintf(strcat('Saved plot to ', pdf_filename, '\n'));        
